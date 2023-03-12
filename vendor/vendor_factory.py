@@ -21,7 +21,7 @@ class VendorFactory:
 
 
 def test_raspberry():
-    return platform.system() == "Linux" and "arm" in platform.node()
+    return platform.system() == "Linux" and "raspberry" in platform.node()
 
 
 def test_arduino():
