@@ -5,11 +5,14 @@ import socket
 import shutil
 import psutil
 
-from vendor.domain import Domain
+from core.domain import Domain
 from utils import to_GB, to_MB, MAX_INT32BIT
 
 
 class System(Domain):
+    def __init__(self, runner):
+        self.runner = runner
+
     @property
     def architecture(self):
         return '64bit' if sys.maxsize > MAX_INT32BIT else '32bit'

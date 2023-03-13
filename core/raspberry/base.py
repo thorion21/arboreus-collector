@@ -5,13 +5,13 @@ from fastapi import HTTPException
 from utils import *
 from .system import System
 from .sensors import Sensors
-from vendor.types import DomainType
-from vendor.vendor import Vendor
+from core.types import DomainType
+from core.vendor import Vendor
 
 
 class Raspberry(Vendor):
     @staticmethod
-    def collect(domain):
+    def collect(domain, runner):
         opts = {
             DomainType.System: System,
             DomainType.Sensors: Sensors,
@@ -28,10 +28,10 @@ class Raspberry(Vendor):
 
         if isinstance(filtered_domain, list):
             domains = reduce(
-                lambda x, y: x | y, [domain().dump() for domain in filtered_domain]
+                lambda x, y: x | y, [domain(runner).dump() for domain in filtered_domain]
             )
         else:
-            domains = opts.get(domain)().dump()
+            domains = filtered_domain(runner).dump()
 
         return {
             "vendor": "raspberry",
