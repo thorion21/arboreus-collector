@@ -22,7 +22,10 @@ class Sensors(Domain):
         except Exception:
             return None
         
-        return result['temperature']
+        return {
+            'value': result['temperature'],
+            'last_reading': result['last_reading'],
+        }
     
     @property
     def humidity(self):
@@ -31,7 +34,10 @@ class Sensors(Domain):
         except Exception:
             return None
         
-        return result['humidity']
+        return {
+            'value': result['humidity'],
+            'last_reading': result['last_reading'],
+        }
 
     def dump(self):
         return utils.dump(self)

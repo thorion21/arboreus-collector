@@ -8,6 +8,10 @@ from core.hardware.adafruit.dht22 import DHT22
 
 
 def bootstrap(runner):
+    # TODO: Use reporter class for Prometheus as parameter for the sensor
+    # to report when it fails to get a read within selected period
+
+    # Also, use config files to configure the specific details of each sensor
     runner.register_routine('dht22', DHT22())
     return runner
 
