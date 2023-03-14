@@ -10,8 +10,9 @@ from utils import to_GB, to_MB, MAX_INT32BIT
 
 
 class System(Domain):
-    def __init__(self, runner):
+    def __init__(self, runner, config):
         self.runner = runner
+        self.config = config
 
     @property
     def architecture(self):

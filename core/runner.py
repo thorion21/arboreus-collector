@@ -12,7 +12,7 @@ class Runner:
             raise TypeError("Provided item is not a routine")
         
         if key in self.routines:
-            raise ValueError(f"Duplicate routine key `{key}`")
+            return
 
         routine_thr = Thread(target=routine.loop)
         self.routines[key] = {

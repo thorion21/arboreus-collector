@@ -11,7 +11,7 @@ from core.vendor import Vendor
 
 class Raspberry(Vendor):
     @staticmethod
-    def collect(domain, runner):
+    def collect(domain, runner, config):
         opts = {
             DomainType.System: System,
             DomainType.Sensors: Sensors,
@@ -28,13 +28,14 @@ class Raspberry(Vendor):
 
         if isinstance(filtered_domain, list):
             domains = reduce(
-                lambda x, y: x | y, [domain(runner).dump() for domain in filtered_domain]
+                lambda x, y: x | y, [domain(runner, config).dump() for domain in filtered_domain]
             )
         else:
-            domains = filtered_domain(runner).dump()
+            domains = filtered_domain(runner, config).dump()
 
         return {
             "vendor": "raspberry",
             "domains": domains,
+            "location": config['general']['location'],
             "local_time": datetime.utcnow().strftime(DATE_FORMAT),
         }

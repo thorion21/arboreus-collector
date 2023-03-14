@@ -5,8 +5,9 @@ from core.domain import Domain
 
 
 class Sensors(Domain):
-    def __init__(self, runner):
+    def __init__(self, runner, config):
         self.runner = runner
+        self.config = config
 
     @property
     def cpu_temp(self):
@@ -18,25 +19,27 @@ class Sensors(Domain):
     @property
     def temperature(self):
         try:
-            result = self.runner.collect('dht22')
+            sensor_type = self.config['sensor.types']['temperature']
+            result = self.runner.collect(sensor_type)
         except Exception:
             return None
         
         return {
             'value': result['temperature'],
-            'last_reading': result['last_reading'],
+            'sensor_type': sensor_type,
         }
     
     @property
-    def humidity(self):
+    def air_humidity(self):
         try:
-            result = self.runner.collect('dht22')
+            sensor_type = self.config['sensor.types']['air_humidity']
+            result = self.runner.collect(sensor_type)
         except Exception:
             return None
         
         return {
             'value': result['humidity'],
-            'last_reading': result['last_reading'],
+            'sensor_type': sensor_type,
         }
 
     def dump(self):
